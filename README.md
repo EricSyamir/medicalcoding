@@ -75,31 +75,6 @@ $env:OPENAI_API_KEY="sk-..."
 python main.py --provider openai --input examples/sample_note.txt --output output.json --pretty
 ```
 
-### Docker
-
-```bash
-# Build the image
-docker build -t medical-coding-system .
-
-# Run with a note file
-docker run --rm \
-  -e OPENAI_API_KEY=sk-... \
-  -v "$(pwd)/examples:/app/notes:ro" \
-  -v "$(pwd)/output:/app/output" \
-  medical-coding-system \
-  --input /app/notes/sample_note.txt \
-  --output /app/output/result.json \
-  --pretty
-
-# Using docker-compose (set OPENAI_API_KEY in .env first)
-docker-compose run medical-coder \
-  --input /app/notes/sample_note.txt \
-  --output /app/output/result.json \
-  --pretty
-```
-
----
-
 ## CLI Reference
 
 ```
@@ -194,8 +169,6 @@ medical-coding-system/
 ├── main.py                  # CLI entry point
 ├── generate_pdf.py          # Architecture PDF generator
 ├── requirements.txt
-├── Dockerfile
-├── docker-compose.yml
 ├── .env.example
 ├── src/
 │   ├── __init__.py

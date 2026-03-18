@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Upload, FileText, Sparkles, ChevronDown } from "lucide-react";
+import { Upload, FileText, Sparkles, ChevronDown, KeyRound } from "lucide-react";
 import clsx from "clsx";
 
 const SAMPLE_NOTE_SNIPPET = `PATIENT ENCOUNTER NOTE
@@ -13,8 +13,9 @@ HISTORY: 73-year-old male with chronic systolic CHF (EF 35%), CAD s/p CABG x3 (2
 hypertension, T2DM on metformin + insulin glargine, hyperlipidemia, and CKD stage 3...`;
 
 interface Props {
-  onSubmit: (note: string, provider: string, model: string) => void;
+  onSubmit: (note: string, provider: string, model: string, apiKey?: string) => void;
   loading: boolean;
+  mode: "demo" | "production";
 }
 
 const PROVIDERS = ["gemini", "openai"] as const;
@@ -24,10 +25,11 @@ const MODELS: Record<string, string[]> = {
   openai: ["gpt-4o", "gpt-4o-mini", "gpt-4-turbo"],
 };
 
-export default function NoteInput({ onSubmit, loading }: Props) {
+export default function NoteInput({ onSubmit, loading, mode }: Props) {
   const [note,     setNote]     = useState("");
   const [provider, setProvider] = useState<"gemini" | "openai">("gemini");
   const [model,    setModel]    = useState(MODELS.gemini[0]);
+  const [apiKey,   setApiKey]   = useState("");
   const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -60,7 +62,7 @@ export default function NoteInput({ onSubmit, loading }: Props) {
 
   const handleSubmit = () => {
     if (note.trim().length < 20) return;
-    onSubmit(note, provider, model);
+    onSubmit(note, provider, model, apiKey.trim() || undefined);
   };
 
   return (
@@ -158,14 +160,35 @@ export default function NoteInput({ onSubmit, loading }: Props) {
           </div>
         </div>
 
+        {/* Production key prompt */}
+        {mode === "production" && (
+          <div className="px-5 pb-0">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 text-slate-600">
+                <KeyRound className="w-4 h-4" />
+                <p className="text-xs font-semibold">API key required for Production</p>
+              </div>
+              <input
+                value={apiKey}
+                onChange={(e) => setApiKey(e.target.value)}
+                placeholder={provider === "gemini" ? "Paste Google API key (AIza…)" : "Paste OpenAI API key (sk-…)"}
+                className="flex-1 min-w-[220px] text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-navy-200"
+              />
+              <p className="text-[11px] text-slate-400">
+                Used for this request only.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Submit */}
         <div className="px-5 pb-5">
           <button
             onClick={handleSubmit}
-            disabled={note.trim().length < 20 || loading}
+            disabled={note.trim().length < 20 || loading || (mode === "production" && apiKey.trim().length < 10)}
             className={clsx(
               "w-full flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-bold transition-all",
-              note.trim().length >= 20 && !loading
+              note.trim().length >= 20 && !loading && (mode !== "production" || apiKey.trim().length >= 10)
                 ? "bg-navy-800 text-white hover:bg-navy-700 shadow-sm hover:shadow"
                 : "bg-slate-100 text-slate-400 cursor-not-allowed"
             )}

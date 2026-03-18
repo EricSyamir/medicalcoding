@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Activity, Github, BookOpen, Loader2 } from "lucide-react";
 import type { ReviewPayload } from "@/types/review";
 import NoteInput        from "@/components/NoteInput";
 import ReviewDashboard  from "@/components/ReviewDashboard";
 import ProcessingSteps  from "@/components/ProcessingSteps";
+import ModeGateModal, { type AppMode } from "@/components/ModeGateModal";
 
 type View = "input" | "processing" | "results";
 
@@ -14,8 +15,20 @@ export default function Home() {
   const [result,         setResult]         = useState<ReviewPayload | null>(null);
   const [error,          setError]          = useState<string | null>(null);
   const [processingStep, setProcessingStep] = useState(0);
+  const [mode,           setMode]           = useState<AppMode>("demo");
+  const [modePromptOpen, setModePromptOpen] = useState(true);
 
-  const handleSubmit = async (note: string, provider: string, model: string) => {
+  useEffect(() => {
+    const saved = window.localStorage.getItem("app_mode") as AppMode | null;
+    if (saved === "demo" || saved === "production") {
+      setMode(saved);
+      setModePromptOpen(false);
+    } else {
+      setModePromptOpen(true);
+    }
+  }, []);
+
+  const handleSubmit = async (note: string, provider: string, model: string, apiKey?: string) => {
     setError(null);
     setProcessingStep(0);
     setView("processing");
@@ -31,7 +44,13 @@ export default function Home() {
       const res = await fetch("/api/process", {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify({ note_text: note, provider, model }),
+        body:    JSON.stringify({
+          note_text: note,
+          provider,
+          model,
+          demo: mode === "demo",
+          api_key: mode === "production" ? apiKey : undefined,
+        }),
       });
 
       timers.forEach(clearTimeout);
@@ -63,6 +82,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <ModeGateModal
+        open={modePromptOpen}
+        onClose={() => setModePromptOpen(false)}
+        onSelect={(m) => {
+          setMode(m);
+          window.localStorage.setItem("app_mode", m);
+          setModePromptOpen(false);
+        }}
+      />
 
       {/* ── Navigation ─────────────────────────────────────── */}
       <header className="sticky top-0 z-50 bg-navy-800 border-b border-white/10 shadow-lg">
@@ -129,7 +157,16 @@ export default function Home() {
                 </div>
               )}
 
-              <NoteInput onSubmit={handleSubmit} loading={false} />
+              <div className="flex items-center justify-center mb-4">
+                <button
+                  onClick={() => setModePromptOpen(true)}
+                  className="text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
+                >
+                  Mode: {mode === "demo" ? "Demo (mock LLM)" : "Production (API key)"} · Change
+                </button>
+              </div>
+
+              <NoteInput onSubmit={handleSubmit} loading={false} mode={mode} />
             </div>
           )}
 

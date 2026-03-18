@@ -5,9 +5,12 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
 
   // Demo mode: return mock data without hitting the backend.
-  // Enabled by DEMO_MODE=true or when BACKEND_URL is not configured.
+  // Enabled by:
+  // - explicit client selection (body.demo === true), OR
+  // - server config (DEMO_MODE=true), OR
+  // - no BACKEND_URL configured
   const demoMode =
-    process.env.DEMO_MODE === "true" || !process.env.BACKEND_URL;
+    body?.demo === true || process.env.DEMO_MODE === "true" || !process.env.BACKEND_URL;
 
   if (demoMode) {
     // Simulate realistic processing delay

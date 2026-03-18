@@ -1,0 +1,1 @@
+﻿# Python\n.venv/\n__pycache__/\n*.pyc\n.pytest_cache/\nlogs/\noutput/\n.env\n\n# Node\nfrontend/node_modules/\nfrontend/.next/\nfrontend/.vercel/\n\n# OS\n.DS_Store\nThumbs.db\n

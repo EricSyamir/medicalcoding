@@ -1,0 +1,109 @@
+PATIENT ENCOUNTER NOTE
+=======================
+Date of Service: 03/18/2026
+Provider: Dr. Sarah Mitchell, MD, FACC
+Department: Cardiology – Outpatient
+Patient: John Doe | DOB: 04/12/1952 | MRN: 00847231
+
+CHIEF COMPLAINT:
+Progressive shortness of breath and worsening leg swelling over the past 2 weeks.
+
+HISTORY OF PRESENT ILLNESS:
+Mr. Doe is a 73-year-old male with a longstanding history of coronary artery disease
+(status post coronary artery bypass graft x3 in 2018), chronic systolic heart failure
+(last known EF 35% on echo 6 months ago), hypertension, type 2 diabetes mellitus
+(on metformin 1000 mg BID and insulin glargine 20 units nightly), and hyperlipidemia.
+
+He presents today reporting a 2-week history of worsening dyspnea on exertion, now
+occurring with minimal activity such as walking from his bedroom to the kitchen. He
+also reports 3-pillow orthopnea and woke twice last night with acute shortness of
+breath. He has noted bilateral lower extremity pitting edema up to the mid-calf level.
+He denies chest pain, palpitations, syncope, or fever.
+
+His wife reports he gained approximately 8 lbs over the past 10 days. He has been
+compliant with his medications but admits to eating salty foods at a family gathering
+3 weeks ago.
+
+PAST MEDICAL HISTORY:
+1. Chronic systolic congestive heart failure (EF 35%)
+2. Coronary artery disease — history of CABG x3 (2018)
+3. Essential hypertension
+4. Type 2 diabetes mellitus — on metformin and insulin glargine
+5. Hyperlipidemia — on atorvastatin 40 mg
+6. Stage 3 chronic kidney disease (baseline creatinine 1.8 mg/dL)
+7. Former smoker — quit 2010 (40 pack-year history)
+
+MEDICATIONS:
+- Carvedilol 12.5 mg BID
+- Lisinopril 10 mg daily
+- Furosemide 40 mg daily
+- Spironolactone 25 mg daily
+- Atorvastatin 40 mg nightly
+- Metformin 1000 mg BID
+- Insulin glargine 20 units subcutaneously nightly
+- Aspirin 81 mg daily
+
+ALLERGIES: Penicillin (rash)
+
+REVIEW OF SYSTEMS:
+Positive: dyspnea on exertion, orthopnea, paroxysmal nocturnal dyspnea, bilateral
+lower extremity edema, fatigue, decreased exercise tolerance.
+Negative: chest pain, palpitations, syncope, fever, chills, cough, hemoptysis,
+abdominal pain, nausea/vomiting.
+
+PHYSICAL EXAMINATION:
+Vital Signs: BP 152/94 mmHg, HR 88 bpm (regular), RR 18/min, SpO2 91% on room air,
+Weight 212 lbs (baseline 204 lbs), Temperature 98.6°F.
+
+General: Alert and oriented x3, mild respiratory distress, speaking in full sentences.
+HEENT: Jugular venous distension to 12 cm at 45 degrees.
+Cardiovascular: Regular rate and rhythm; S3 gallop present; no murmurs.
+Respiratory: Bibasilar crackles to mid-lung fields bilaterally; no wheezing.
+Abdomen: Soft, non-tender; mild hepatomegaly appreciated on palpation.
+Extremities: 2+ pitting edema bilateral lower extremities to the knee; no calf tenderness.
+Skin: Warm, no rashes.
+
+DIAGNOSTIC STUDIES:
+1. Chest X-ray (2 views): Cardiomegaly with bilateral interstitial pulmonary edema and
+   small bilateral pleural effusions. No pneumothorax.
+2. 12-lead ECG: Normal sinus rhythm at 88 bpm; left bundle branch block (previously
+   documented); no new ST changes.
+3. BMP: Sodium 136, Potassium 4.2, Chloride 100, CO2 22, BUN 28, Creatinine 2.1
+   (baseline 1.8 — acute-on-chronic), Glucose 187.
+4. CBC: WBC 7.2, Hgb 11.4, Hct 34%, Plt 210.
+5. BNP: 980 pg/mL (markedly elevated).
+6. HbA1c: 8.2% (last result was 7.6% three months ago).
+
+ASSESSMENT AND PLAN:
+
+1. ACUTE DECOMPENSATED HEART FAILURE (chronic systolic CHF exacerbation) — primary diagnosis.
+   - Admit to telemetry for IV diuresis (furosemide 80 mg IV BID).
+   - Daily weights; strict fluid restriction 1.5L/day.
+   - Monitor renal function and electrolytes BID.
+   - Schedule repeat echocardiogram to reassess EF.
+
+2. ACUTE-ON-CHRONIC KIDNEY DISEASE — creatinine elevated from baseline 1.8 to 2.1,
+   likely cardiorenal syndrome in setting of decompensated CHF.
+   - Hold ACE inhibitor temporarily; monitor closely.
+   - Renal consult requested.
+
+3. HYPERTENSION, UNCONTROLLED — BP 152/94.
+   - Increase carvedilol to 25 mg BID once volume status improves.
+
+4. TYPE 2 DIABETES MELLITUS WITH HYPERGLYCEMIA — glucose 187, HbA1c 8.2%.
+   - Continue home insulin regimen; hold metformin given acute kidney injury.
+   - Endocrinology consult to be placed.
+
+5. HYPERLIPIDEMIA — continue atorvastatin 40 mg.
+
+6. HISTORY OF CABG — no acute intervention indicated.
+
+7. STAGE 3 CKD — worsening in current context, see #2 above.
+
+8. FORMER SMOKER — counseled on continued smoking cessation; flu vaccine administered
+   in clinic today.
+
+DISPOSITION: Admit to inpatient cardiology telemetry unit.
+
+Electronically signed: Dr. Sarah Mitchell, MD, FACC
+Time: 14:32

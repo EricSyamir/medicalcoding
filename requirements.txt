@@ -1,0 +1,18 @@
+# Core dependencies
+openai>=1.30.0
+google-generativeai>=0.8.0
+pydantic>=2.7.0
+
+# Code retrieval (TF-IDF)
+scikit-learn>=1.4.0
+numpy>=1.26.0
+
+# PDF generation
+reportlab>=4.2.0
+
+# Testing
+pytest>=8.2.0
+pytest-mock>=3.14.0
+
+# Dev utilities
+python-dotenv>=1.0.0

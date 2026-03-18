@@ -1,0 +1,608 @@
+2026-03-19T02:15:40 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:15:40 | INFO     | main | Model: gpt-4o  |  Top-K: 10
+2026-03-19T02:15:40 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:15:40 | INFO     | src.pipeline | Pipeline initialised (model=gpt-4o, top_k=10)
+2026-03-19T02:15:40 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:15:40 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:15:40Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:15:40 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:15:40Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:15:40 | INFO     | src.extraction | Extracting medical facts with model=gpt-4o
+2026-03-19T02:15:42 | INFO     | httpx | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-03-19T02:15:42 | INFO     | openai._base_client | Retrying request to /chat/completions in 0.471050 seconds
+2026-03-19T02:15:42 | INFO     | httpx | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-03-19T02:15:42 | INFO     | openai._base_client | Retrying request to /chat/completions in 0.923832 seconds
+2026-03-19T02:15:44 | INFO     | httpx | HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+2026-03-19T02:15:44 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:15:44Z] Extraction failed: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2026-03-19T02:15:44 | ERROR    | main | Pipeline error: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+Traceback (most recent call last):
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\main.py", line 108, in main
+    result = pipeline.process_file(args.input)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 173, in process_file
+    return self.process_note(note)
+           ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 92, in process_note
+    facts = extract_facts(note.normalized_text, self.client, self.model)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\extraction.py", line 73, in extract_facts
+    response = client.chat.completions.create(
+        model=model,
+    ...<5 lines>...
+        temperature=0.0,  # deterministic for reproducibility
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\openai\_utils\_utils.py", line 286, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1211, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<47 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\openai\_base_client.py", line 1297, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\openai\_base_client.py", line 1070, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}}
+2026-03-19T02:17:12 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:17:12 | INFO     | main | Model: gpt-4o  |  Top-K: 10
+2026-03-19T02:17:12 | ERROR    | main | Initialisation failed: OpenAI API key required. Set OPENAI_API_KEY env variable or pass openai_api_key.
+2026-03-19T02:21:35 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:21:35 | INFO     | main | Provider: gemini  |  Model: gemini-1.5-flash  |  Top-K: 10
+2026-03-19T02:21:36 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:21:36 | INFO     | src.pipeline | Pipeline initialised (model=gemini-1.5-flash, top_k=10)
+2026-03-19T02:21:36 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:21:36 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:36Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:21:36 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:36Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:21:36 | INFO     | src.extraction | Extracting medical facts with model=gemini-1.5-flash
+2026-03-19T02:21:37 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:37Z] Extraction failed: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-19T02:21:37 | ERROR    | main | Pipeline error: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+Traceback (most recent call last):
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\main.py", line 180, in main
+    result = pipeline.process_file(args.input)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 166, in process_file
+    return self.process_note(note)
+           ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 86, in process_note
+    facts = extract_facts(note.normalized_text, self.llm, self.model)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\extraction.py", line 76, in extract_facts
+    data = llm.generate_json(EXTRACTION_SYSTEM_PROMPT, user_message)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\llm.py", line 66, in generate_json
+    response = self._model.generate_content(
+        full_prompt,
+        generation_config=config,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\generativeai\generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.NotFound: 404 models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2026-03-19T02:21:58 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:21:58 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:21:58 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:21:58 | INFO     | src.pipeline | Pipeline initialised (model=gemini-2.0-flash, top_k=10)
+2026-03-19T02:21:58 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:21:58 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:58Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:21:58 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:58Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:21:58 | INFO     | src.extraction | Extracting medical facts with model=gemini-2.0-flash
+2026-03-19T02:21:59 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:21:59Z] Extraction failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 864.620058ms. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+}
+]
+2026-03-19T02:21:59 | ERROR    | main | Pipeline error: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 864.620058ms. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+}
+]
+Traceback (most recent call last):
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\main.py", line 180, in main
+    result = pipeline.process_file(args.input)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 166, in process_file
+    return self.process_note(note)
+           ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 86, in process_note
+    facts = extract_facts(note.normalized_text, self.llm, self.model)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\extraction.py", line 76, in extract_facts
+    data = llm.generate_json(EXTRACTION_SYSTEM_PROMPT, user_message)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\llm.py", line 66, in generate_json
+    response = self._model.generate_content(
+        full_prompt,
+        generation_config=config,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\generativeai\generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.ResourceExhausted: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 864.620058ms. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+}
+]
+2026-03-19T02:23:49 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:23:49 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:23:49 | ERROR    | main | Initialisation failed: Gemini API key required. Set GOOGLE_API_KEY or GEMINI_API_KEY or pass api_key.
+2026-03-19T02:24:28 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:24:28 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:24:28 | ERROR    | main | Initialisation failed: Gemini API key required. Set GOOGLE_API_KEY or GEMINI_API_KEY or pass api_key.
+2026-03-19T02:25:31 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:25:31 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:25:32 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:25:32 | INFO     | src.pipeline | Pipeline initialised (model=gemini-2.0-flash, top_k=10)
+2026-03-19T02:25:32 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:25:32 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:25:32Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:25:32 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:25:32Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:25:32 | INFO     | src.extraction | Extracting medical facts with model=gemini-2.0-flash
+2026-03-19T02:25:32 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:25:32Z] Extraction failed: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2026-03-19T02:25:32 | ERROR    | main | Pipeline error: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\main.py", line 180, in main
+    result = pipeline.process_file(args.input)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 166, in process_file
+    return self.process_note(note)
+           ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 86, in process_note
+    facts = extract_facts(note.normalized_text, self.llm, self.model)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\extraction.py", line 76, in extract_facts
+    data = llm.generate_json(EXTRACTION_SYSTEM_PROMPT, user_message)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\llm.py", line 69, in generate_json
+    response = self._model.generate_content(
+        full_prompt,
+        generation_config=config,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\generativeai\generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2026-03-19T02:26:35 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:26:35 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:26:36 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:26:36 | INFO     | src.pipeline | Pipeline initialised (model=gemini-2.0-flash, top_k=10)
+2026-03-19T02:26:36 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:26:36 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:26:36Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:26:36 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:26:36Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:26:36 | INFO     | src.extraction | Extracting medical facts with model=gemini-2.0-flash
+2026-03-19T02:26:36 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:26:36Z] Extraction failed: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 23.644425894s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 23
+}
+]
+2026-03-19T02:26:36 | ERROR    | main | Gemini API quota/rate limit: 429 You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash
+Please retry in 23.644425894s. [links {
+  description: "Learn more about Gemini API quotas"
+  url: "https://ai.google.dev/gemini-api/docs/rate-limits"
+}
+, violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_requests"
+  quota_id: "GenerateRequestsPerMinutePerProjectPerModel-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+violations {
+  quota_metric: "generativelanguage.googleapis.com/generate_content_free_tier_input_token_count"
+  quota_id: "GenerateContentInputTokensPerModelPerMinute-FreeTier"
+  quota_dimensions {
+    key: "model"
+    value: "gemini-2.0-flash"
+  }
+  quota_dimensions {
+    key: "location"
+    value: "global"
+  }
+}
+, retry_delay {
+  seconds: 23
+}
+]
+2026-03-19T02:30:06 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:30:06 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:30:07 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:30:07 | INFO     | src.pipeline | Pipeline initialised (model=gemini-2.0-flash, top_k=10)
+2026-03-19T02:30:07 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:30:07 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:07Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:30:07 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:07Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:30:07 | INFO     | src.extraction | Extracting medical facts with model=gemini-2.0-flash
+2026-03-19T02:30:07 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:07Z] Extraction failed: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2026-03-19T02:30:07 | ERROR    | main | Pipeline error: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+Traceback (most recent call last):
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\main.py", line 265, in main
+    result = pipeline.process_file(args.input)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 166, in process_file
+    return self.process_note(note)
+           ~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\pipeline.py", line 86, in process_note
+    facts = extract_facts(note.normalized_text, self.llm, self.model)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\extraction.py", line 76, in extract_facts
+    data = llm.generate_json(EXTRACTION_SYSTEM_PROMPT, user_message)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\src\llm.py", line 69, in generate_json
+    response = self._model.generate_content(
+        full_prompt,
+        generation_config=config,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\generativeai\generative_models.py", line 331, in generate_content
+    response = self._client.generate_content(
+        request,
+        **request_options,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\ai\generativelanguage_v1beta\services\generative_service\client.py", line 835, in generate_content
+    response = rpc(
+        request,
+    ...<2 lines>...
+        metadata=metadata,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\gapic_v1\method.py", line 131, in __call__
+    return wrapped_func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 294, in retry_wrapped_func
+    return retry_target(
+        target,
+    ...<3 lines>...
+        on_error=on_error,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 156, in retry_target
+    next_sleep = _retry_error_helper(
+        exc,
+    ...<6 lines>...
+        timeout,
+    )
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_base.py", line 214, in _retry_error_helper
+    raise final_exc from source_exc
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\retry\retry_unary.py", line 147, in retry_target
+    result = target()
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\timeout.py", line 130, in func_with_timeout
+    return func(*args, **kwargs)
+  File "C:\Users\erics\Desktop\Growth Ops\medical-coding-system\.venv\Lib\site-packages\google\api_core\grpc_helpers.py", line 77, in error_remapped_callable
+    raise exceptions.from_grpc_error(exc) from exc
+google.api_core.exceptions.InvalidArgument: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2026-03-19T02:30:31 | INFO     | main | Medical Coding Pipeline starting
+2026-03-19T02:30:31 | INFO     | main | Provider: gemini  |  Model: gemini-2.0-flash  |  Top-K: 10
+2026-03-19T02:30:31 | INFO     | src.code_retrieval | Building TF-IDF indexes: 133 ICD-10 codes, 85 CPT codes
+2026-03-19T02:30:31 | INFO     | src.pipeline | Pipeline initialised (model=gemini-2.0-flash, top_k=10)
+2026-03-19T02:30:31 | INFO     | main | Processing file: examples\sample_note.txt
+2026-03-19T02:30:31 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:31Z] Pipeline started: note_id=note_da99160e6c20, source=examples\sample_note.txt, words=694
+2026-03-19T02:30:31 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:31Z] Step 1/4: Extracting clinical facts via LLM
+2026-03-19T02:30:31 | INFO     | src.extraction | Extracting medical facts with model=gemini-2.0-flash
+2026-03-19T02:30:31 | INFO     | audit.note_da99160e6c20 | [2026-03-18T18:30:31Z] Extraction failed: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]
+2026-03-19T02:30:31 | ERROR    | main | Gemini API error: 400 API key not valid. Please pass a valid API key. [reason: "API_KEY_INVALID"
+domain: "googleapis.com"
+metadata {
+  key: "service"
+  value: "generativelanguage.googleapis.com"
+}
+, locale: "en-US"
+message: "API key not valid. Please pass a valid API key."
+]

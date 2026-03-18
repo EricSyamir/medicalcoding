@@ -18,7 +18,7 @@ Clinical Note (text)
        │
        ▼
   [Extraction]         LLM call 1 — extract structured medical facts
-  (gpt-4o)             (diagnoses, symptoms, procedures, medications, labs)
+  (gemini)             (diagnoses, symptoms, procedures, medications, labs)
        │
        ▼
   [Code Retrieval]     TF-IDF search → top-K ICD-10 + CPT candidates
@@ -26,7 +26,7 @@ Clinical Note (text)
        │
        ▼
   [Code Assignment]    LLM call 2 — select codes, assign confidence scores,
-  (gpt-4o)             attach verbatim evidence quotes from the note
+  (gemini)             attach verbatim evidence quotes from the note
        │
        ▼
   [Validation]         Rule-based checks: conflicts, low confidence,

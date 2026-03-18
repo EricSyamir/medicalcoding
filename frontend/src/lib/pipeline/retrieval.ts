@@ -27,11 +27,15 @@ function tokenize(text: string): string[] {
 
 function cosineSim(queryTokens: string[], doc: string): number {
   const docSet   = new Set(tokenize(doc));
-  const querySet = new Set(queryTokens);
   let matches    = 0;
-  for (const t of querySet) if (docSet.has(t)) matches++;
+  const seen     = new Set<string>();
+  for (const t of queryTokens) {
+    if (seen.has(t)) continue;
+    seen.add(t);
+    if (docSet.has(t)) matches++;
+  }
   if (matches === 0) return 0;
-  return matches / Math.sqrt(querySet.size * docSet.size);
+  return matches / Math.sqrt(seen.size * docSet.size);
 }
 
 function buildDoc(c: CodeEntry): string {

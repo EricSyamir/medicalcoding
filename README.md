@@ -45,6 +45,17 @@ Clinical Note (text)
 - Python 3.11+
 - **Gemini** (default): Google AI API key from [Google AI Studio](https://aistudio.google.com/apikey)
 - **OpenAI** (optional): OpenAI API key
+- Node.js 18+ (for the reviewer UI in `frontend/`)
+
+### Deploy (Vercel)
+
+This repository is a monorepo:
+
+- **Frontend**: `frontend/` (Next.js) — deploy to Vercel
+- **Backend**: `backend/` (FastAPI) — deploy to Render/Railway/etc.
+
+If Vercel auto-detects Python at the repo root, this repo includes a root `vercel.json`
+that forces Vercel to build the Next.js app in `frontend/`.
 
 ### Local Setup
 
@@ -215,7 +226,3 @@ medical-coding-system/
 - Multi-note batch processing and FHIR ingestion are not yet implemented.
 
 ---
-
-## License
-
-MIT
